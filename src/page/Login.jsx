@@ -4,15 +4,17 @@ import ForgetPass from "../components/ForgetPass";
 import ButtonForm from "../components/ButonForm";
 import OrLogin from "../components/OrLogin";
 import InputEmail from "../components/InputEmail";
+import { tes } from "../config/redux/action/action";
+import { connect } from "react-redux";
 
-const Login = () => {
+const Login = ({ tes, isLoading }) => {
   const [showPass, setShowPass] = useState(false);
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
-  const tes = () => {
-    console.log("helo");
+  const tess = () => {
+    tes();
   };
 
   const onEmailChange = (e) => {
@@ -49,7 +51,7 @@ const Login = () => {
           value={form.password}
         />
         <ForgetPass to={"/forget"} />
-        <ButtonForm title={"Masuk"} action={tes} />
+        <ButtonForm title={"Masuk"} action={tess} loading={isLoading} />
         <OrLogin
           to={"/regis"}
           titleLink={"Daftar"}
@@ -60,4 +62,12 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => ({
+  isLoading: state.isLoading,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  tes: () => dispatch(tes()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

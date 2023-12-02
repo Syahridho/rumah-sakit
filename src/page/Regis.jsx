@@ -3,15 +3,18 @@ import ButtonForm from "../components/ButonForm";
 import InputEmail from "../components/InputEmail";
 import InputPassword from "../components/InputPassword";
 import OrLogin from "../components/OrLogin";
+import { registerUserAPI, tes } from "../config/redux/action/action";
+import { connect } from "react-redux";
 
-const Regis = () => {
+const Regis = ({ tes, isLoading, regisAPI }) => {
   const [showPass, setShowPass] = useState(false);
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
+
   const onRegis = () => {
-    console.log("helo");
+    regisAPI(form);
   };
 
   const onEmailChange = (e) => {
@@ -29,6 +32,7 @@ const Regis = () => {
     }));
     console.log(form);
   };
+
   return (
     <div className="container mx-auto p-10 grid md:grid-cols-4 xl:grid-cols-6 ">
       <div className="md:col-span-2 md:col-start-2 xl:col-start-3">
@@ -48,7 +52,7 @@ const Regis = () => {
           value={form.password}
         />
         <p className="text-xs mb-4">Gunakan Minimal 8 karakter</p>
-        <ButtonForm title={"Daftar"} action={onRegis} />
+        <ButtonForm title={"Daftar"} action={onRegis} loading={isLoading} />
         <OrLogin
           to={"/login"}
           titleLink={"Masuk"}
@@ -59,4 +63,13 @@ const Regis = () => {
   );
 };
 
-export default Regis;
+const mapStateToProps = (state) => ({
+  isLoading: state.isLoading,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  tes: () => dispatch(tes()),
+  regisAPI: (data) => dispatch(registerUserAPI(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Regis);
