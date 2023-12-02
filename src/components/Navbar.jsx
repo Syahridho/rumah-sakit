@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 
 const Navbar = () => {
@@ -53,20 +54,18 @@ const Navbar = () => {
               </a>
             </li>
             <li className="flex gap-2 py-8 md:py-0">
-              <a
-                href="
-                #"
+              <Link
+                to={"/login"}
                 className="block font-semibold bg-white text-sky-800 border border-sky-800 py-2 px-4 rounded transition duration-500 hover:shadow hover:bg-sky-800 hover:text-white"
               >
                 Masuk
-              </a>
-              <a
-                href="
-                #"
-                className="block font-semibold bg-sky-800 text-white border border-sky-800 py-2 px-4 transition duration-500 rounded hover:bg-sky-950"
+              </Link>
+              <Link
+                to={"/regis"}
+                className="block font-semibold bg-white text-sky-800 border border-sky-800 py-2 px-4 rounded transition duration-500 hover:shadow hover:bg-sky-800 hover:text-white"
               >
                 Daftar
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

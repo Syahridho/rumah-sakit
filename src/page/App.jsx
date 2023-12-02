@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import Login from "./Login";
+import Regis from "./Regis";
+import Forget from "./Forget";
 
 const App = () => {
   return (
@@ -8,8 +10,8 @@ const App = () => {
       <Routes>
         <Route path={"/"} element={<Home />} />
         <Route path={"/login"} element={<Login />} />
-        <Route path={"/regis"} element={<Home />} />
-        <Route path={"/forget"} element={<Home />} />
+        <Route path={"/regis"} element={<Regis />} />
+        <Route path={"/forget"} element={<Forget />} />
         <Route path={"*"} element={<Home />} />
       </Routes>
     </Router>
