@@ -47,6 +47,9 @@ export const loginUserAPI = (data) => (dispatch) => {
           emailVerified: user.emailVerified,
           refrastToken: user.refreshToken,
         };
+        if (user.email === "admin@gmail.com") {
+          dispatch({ type: "CHANGE_ISADMIN", value: true });
+        }
         localStorage.setItem("dataUser", JSON.stringify(dataUser));
         dispatch({ type: "CHANGE_USER", value: dataUser });
         dispatch({ type: "CHANGE_ISLOGIN", value: true });
@@ -72,6 +75,7 @@ export const signOutAPI = () => (dispatch) => {
         dispatch({ type: "CHANGE_USER", value: {} });
         dispatch({ type: "CHANGE_ISLOGIN", value: false });
         dispatch({ type: "CHANGE_ISLOADING", value: false });
+        dispatch({ type: "CHANGE_ISADMIN", value: false });
         localStorage.removeItem("dataUser");
         resolve(true);
       })
@@ -109,7 +113,11 @@ export const resetPasswordAPI = (email) => (dispatch) => {
 export const checkLogin = (user) => (dispatch) => {
   if (user === null) {
     dispatch({ type: "CHANGE_ISLOGIN", value: false });
+    dispatch({ type: "CHANGE_ISADMIN", value: false });
   } else {
+    if (user.email === "admin@gmail.com") {
+      dispatch({ type: "CHANGE_ISADMIN", value: true });
+    }
     dispatch({ type: "CHANGE_ISLOGIN", value: true });
     dispatch({ type: "CHANGE_USER", value: user });
   }

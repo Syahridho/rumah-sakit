@@ -1,39 +1,36 @@
 const initialState = {
-  isLogin: false,
   isLoading: false,
+  isLogin: false,
+  isAdmin: false,
   user: {},
 };
 
 const reducer = (state = initialState, action) => {
-  if (action.type === "TES") {
-    return {
-      ...state,
-      isLoading: action.value,
-    };
-  }
+  switch (action.type) {
+    case "CHANGE_ISLOADING":
+      return {
+        ...state,
+        isLoading: action.value,
+      };
+    case "CHANGE_ISLOGIN":
+      return {
+        ...state,
+        isLogin: action.value,
+      };
+    case "CHANGE_ISADMIN":
+      return {
+        ...state,
+        isAdmin: action.value,
+      };
+    case "CHANGE_USER":
+      return {
+        ...state,
+        user: action.value,
+      };
 
-  if (action.type === "CHANGE_ISLOADING") {
-    return {
-      ...state,
-      isLoading: action.value,
-    };
+    default:
+      return state;
   }
-
-  if (action.type === "CHANGE_ISLOGIN") {
-    return {
-      ...state,
-      isLogin: action.value,
-    };
-  }
-
-  if (action.type === "CHANGE_USER") {
-    return {
-      ...state,
-      user: action.value,
-    };
-  }
-
-  return state;
 };
 
 export default reducer;

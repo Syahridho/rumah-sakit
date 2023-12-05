@@ -2,7 +2,7 @@ import { FaCircleNotch } from "react-icons/fa6";
 
 const ButtonSignOut = ({ title, action, loading }) => {
   const style =
-    "w-20 bg-white py-2 text-red-500 rounded shadow border border-red-500 transition duration-500 hover:bg-red-500 hover:text-white";
+    "w-20 bg-white py-1.5 text-red-500 rounded shadow border border-red-500 transition duration-500 hover:bg-red-500 hover:text-white";
 
   if (loading) {
     <button className={style}>
@@ -11,7 +11,7 @@ const ButtonSignOut = ({ title, action, loading }) => {
   }
 
   return (
-    <button className={style} onClick={action}>
+    <button className={style} onClick={() => action()}>
       {title}
     </button>
   );

@@ -4,11 +4,10 @@ import { signOutAPI, checkLogin } from "../config/redux/action/action";
 import { connect } from "react-redux";
 import ButtonLogin from "./ButtonLogin";
 import ButtonSignOut from "./ButtonSignOut";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-const Navbar = ({ isLoading, isLogin, checkLogin, signOut }) => {
+const Navbar = ({ isLoading, isLogin, isAdmin, checkLogin, signOut }) => {
   const [navOn, setNavOn] = useState(true);
-  const navigasi = useNavigate();
 
   useEffect(() => {
     const userLocal = JSON.parse(localStorage.getItem("dataUser"));
@@ -35,9 +34,11 @@ const Navbar = ({ isLoading, isLogin, checkLogin, signOut }) => {
   };
 
   return (
-    <div className="bg-white flex flex-col justify-between items-center shadow md:flex-row md:px-12 xl:px-32 ">
+    <div className="bg-white sticky top-0 z-10 flex flex-col justify-between items-center shadow md:flex-row md:px-12 xl:px-32 ">
       <div className="py-2 px-7 w-full flex justify-between items-center shadow md:shadow-none md:py-6 md:w-auto">
-        <h1 className="font-extrabold text-blue-900 text-xl">Rumah Sakit</h1>
+        <h1 className="font-extrabold text-blue-900 text-xl shadow-inherit">
+          Rumah Sakit
+        </h1>
         <button className="p-2 md:hidden" onClick={() => setNavOn(!navOn)}>
           {navOn ? (
             <FiX className="w-7 h-7" />
@@ -73,6 +74,23 @@ const Navbar = ({ isLoading, isLogin, checkLogin, signOut }) => {
                 Contact
               </a>
             </li>
+            {isAdmin ? (
+              <>
+                <NavLink
+                  to={"/data-pasien"}
+                  className="w-screen text-center bg-stone-50 block py-4 md:w-auto md:bg-transparent md:p-0"
+                >
+                  Data Pasien
+                </NavLink>
+                <NavLink
+                  to={"/data-obat"}
+                  className="w-screen text-center bg-stone-50 block py-4 md:w-auto md:bg-transparent md:p-0"
+                >
+                  Data Obat
+                </NavLink>
+              </>
+            ) : null}
+
             <li className="flex gap-2 py-8 md:py-0">
               {isLogin ? (
                 <ButtonSignOut
@@ -97,6 +115,7 @@ const Navbar = ({ isLoading, isLogin, checkLogin, signOut }) => {
 const mapStateToProps = (state) => ({
   isLoading: state.isLoading,
   isLogin: state.isLogin,
+  isAdmin: state.isAdmin,
 });
 
 const mapDispatchToProps = (dispatch) => ({
