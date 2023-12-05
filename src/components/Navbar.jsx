@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
+import { signOutAPI, checkLogin } from "../config/redux/action/action";
+import { connect } from "react-redux";
+import ButtonLogin from "./ButtonLogin";
+import ButtonSignOut from "./ButtonSignOut";
+import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ isLoading, isLogin, checkLogin, signOut }) => {
   const [navOn, setNavOn] = useState(true);
+  const navigasi = useNavigate();
 
   useEffect(() => {
+    const userLocal = JSON.parse(localStorage.getItem("dataUser"));
+    checkLogin(userLocal);
+    console.log(userLocal);
     const handleResize = () => {
       setNavOn(window.innerWidth >= 768);
     };
@@ -18,12 +26,24 @@ const Navbar = () => {
     };
   }, []);
 
+  const onHandleSignOut = async () => {
+    const res = await signOut().catch((error) => error);
+
+    if (res === false) {
+      console.log(res);
+    }
+  };
+
   return (
     <div className="bg-white flex flex-col justify-between items-center shadow md:flex-row md:px-12 xl:px-32 ">
       <div className="py-2 px-7 w-full flex justify-between items-center shadow md:shadow-none md:py-6 md:w-auto">
         <h1 className="font-extrabold text-blue-900 text-xl">Rumah Sakit</h1>
         <button className="p-2 md:hidden" onClick={() => setNavOn(!navOn)}>
-          {navOn ? <FiX className="w-7 h-7" /> : <FiMenu className="w-7 h-7" />}
+          {navOn ? (
+            <FiX className="w-7 h-7" />
+          ) : (
+            <FiMenu className="w-7 h-7 " />
+          )}
         </button>
       </div>
       {navOn ? (
@@ -54,18 +74,18 @@ const Navbar = () => {
               </a>
             </li>
             <li className="flex gap-2 py-8 md:py-0">
-              <Link
-                to={"/login"}
-                className="block font-semibold bg-white text-sky-800 border border-sky-800 py-2 px-4 rounded transition duration-500 hover:shadow hover:bg-sky-800 hover:text-white"
-              >
-                Masuk
-              </Link>
-              <Link
-                to={"/regis"}
-                className="block font-semibold bg-white text-sky-800 border border-sky-800 py-2 px-4 rounded transition duration-500 hover:shadow hover:bg-sky-800 hover:text-white"
-              >
-                Daftar
-              </Link>
+              {isLogin ? (
+                <ButtonSignOut
+                  title={"Keluar"}
+                  action={onHandleSignOut}
+                  loading={isLoading}
+                />
+              ) : (
+                <>
+                  <ButtonLogin title={"Masuk"} to={"/login"} inline={false} />
+                  <ButtonLogin title={"Daftar"} to={"/regis"} inline={"true"} />
+                </>
+              )}
             </li>
           </ul>
         </div>
@@ -74,4 +94,14 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+const mapStateToProps = (state) => ({
+  isLoading: state.isLoading,
+  isLogin: state.isLogin,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  signOut: () => dispatch(signOutAPI()),
+  checkLogin: (user) => dispatch(checkLogin(user)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

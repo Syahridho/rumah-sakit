@@ -2,6 +2,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
+  signOut,
 } from "firebase/auth";
 import { auth } from "./../../firebase/firebase";
 
@@ -46,6 +47,7 @@ export const loginUserAPI = (data) => (dispatch) => {
           emailVerified: user.emailVerified,
           refrastToken: user.refreshToken,
         };
+        localStorage.setItem("dataUser", JSON.stringify(dataUser));
         dispatch({ type: "CHANGE_USER", value: dataUser });
         dispatch({ type: "CHANGE_ISLOGIN", value: true });
         dispatch({ type: "CHANGE_ISLOADING", value: false });
@@ -57,6 +59,28 @@ export const loginUserAPI = (data) => (dispatch) => {
         console.log(errorCode);
         console.log(errorMessage);
         dispatch({ type: "CHANGE_ISLOADING", value: false });
+        reject(errorCode);
+      });
+  });
+};
+
+export const signOutAPI = () => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    dispatch({ type: "CHANGE_ISLOADING", value: true });
+    return signOut(auth)
+      .then(() => {
+        dispatch({ type: "CHANGE_USER", value: {} });
+        dispatch({ type: "CHANGE_ISLOGIN", value: false });
+        dispatch({ type: "CHANGE_ISLOADING", value: false });
+        localStorage.removeItem("dataUser");
+        resolve(true);
+      })
+      .catch((error) => {
+        dispatch({ type: "CHANGE_ISLOADING", value: false });
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
         reject(errorCode);
       });
   });
@@ -80,4 +104,13 @@ export const resetPasswordAPI = (email) => (dispatch) => {
         reject(errorCode);
       });
   });
+};
+
+export const checkLogin = (user) => (dispatch) => {
+  if (user === null) {
+    dispatch({ type: "CHANGE_ISLOGIN", value: false });
+  } else {
+    dispatch({ type: "CHANGE_ISLOGIN", value: true });
+    dispatch({ type: "CHANGE_USER", value: user });
+  }
 };

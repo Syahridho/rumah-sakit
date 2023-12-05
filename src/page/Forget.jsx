@@ -1,12 +1,12 @@
 import { useState } from "react";
 import InputEmail from "../components/InputEmail";
-import ButtonForm from "../components/ButonForm";
+import ButtonForm from "../components/ButtonForm";
 import { resetPasswordAPI } from "../config/redux/action/action";
 import { connect } from "react-redux";
 import AlertForm from "../components/AlertForm";
 import OrLogin from "../components/OrLogin";
 
-const Forget = ({ isLoading, resesPassword }) => {
+const Forget = ({ isLoading, resetPassword }) => {
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState(false);
   const [fail, setFail] = useState(false);
@@ -19,7 +19,7 @@ const Forget = ({ isLoading, resesPassword }) => {
   const onSubmit = async () => {
     setSuccess(false);
     setFail(false);
-    const res = await resesPassword(email).catch((err) => err);
+    const res = await resetPassword(email).catch((err) => err);
 
     if (res === true) {
       setSuccess(true);
@@ -67,7 +67,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  resesPassword: (email) => dispatch(resetPasswordAPI(email)),
+  resetPassword: (email) => dispatch(resetPasswordAPI(email)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Forget);

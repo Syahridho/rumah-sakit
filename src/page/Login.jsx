@@ -1,16 +1,16 @@
 import { useState } from "react";
 import InputPassword from "../components/InputPassword";
 import ForgetPass from "../components/ForgetPass";
-import ButtonForm from "../components/ButonForm";
+import ButtonForm from "../components/ButtonForm";
 import OrLogin from "../components/OrLogin";
 import InputEmail from "../components/InputEmail";
 import { loginUserAPI, tes } from "../config/redux/action/action";
 import { connect } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ isLoading, loginAPI }) => {
+  const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
-  const [login, setLogin] = useState(false);
   const [invalidEmail, setInvalidEmail] = useState(false);
   const [invalidPassword, setInvalidPassword] = useState(false);
   const [manyRequest, setManyRequest] = useState(false);
@@ -19,7 +19,6 @@ const Login = ({ isLoading, loginAPI }) => {
     password: "",
   });
   const onSubmitHandle = async () => {
-    setLogin(false);
     setInvalidEmail(false);
     setInvalidPassword(false);
     setManyRequest(false);
@@ -30,22 +29,19 @@ const Login = ({ isLoading, loginAPI }) => {
         email: "",
         password: "",
       });
-      setLogin(true);
       setInvalidEmail(false);
       setInvalidPassword(false);
       setManyRequest(false);
+      navigate("/");
     } else if (res === "auth/invalid-email") {
-      setLogin(false);
       setInvalidEmail(true);
       setInvalidPassword(false);
       setManyRequest(false);
     } else if (res === "auth/invalid-credential") {
-      setLogin(false);
       setInvalidEmail(false);
       setInvalidPassword(true);
       setManyRequest(false);
     } else if (res === "auth/too-many-requests") {
-      setLogin(false);
       setInvalidEmail(false);
       setInvalidPassword(false);
       setManyRequest(true);
@@ -67,10 +63,6 @@ const Login = ({ isLoading, loginAPI }) => {
     }));
     console.log(form);
   };
-
-  if (login) {
-    return <Navigate to={"/"} />;
-  }
 
   return (
     <div className="container mx-auto p-10 grid md:grid-cols-4 xl:grid-cols-6 ">

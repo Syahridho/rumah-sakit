@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ButtonForm from "../components/ButonForm";
+import ButtonForm from "../components/ButtonForm";
 import InputEmail from "../components/InputEmail";
 import InputPassword from "../components/InputPassword";
 import OrLogin from "../components/OrLogin";
