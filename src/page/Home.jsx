@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import Navbar from "../components/Navbar";
 import Hero from "./../components/Hero";
-import Servise from "../components/service";
+// import Servise from "../components/service";
 
 const Home = ({ user, isLogin, isAdmin }) => {
   console.log(user);
@@ -9,7 +9,7 @@ const Home = ({ user, isLogin, isAdmin }) => {
     <>
       <Navbar />
       <Hero />
-      <Servise />
+      {/* <Servise /> */}
       {isLogin ? (
         <>
           <h1>Sudah login</h1> <h1>{user.email}</h1>{" "}

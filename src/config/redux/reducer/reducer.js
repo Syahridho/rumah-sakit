@@ -3,6 +3,7 @@ const initialState = {
   isLogin: false,
   isAdmin: false,
   user: {},
+  medicene: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -26,6 +27,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.value,
+      };
+    case "CHANGE_MEDICENE":
+      return {
+        ...state,
+        medicene: action.value,
       };
 
     default:

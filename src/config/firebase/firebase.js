@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -10,6 +11,7 @@ import { getAuth } from "firebase/auth";
 const firebaseConfig = {
   apiKey: "AIzaSyAPmpNEIQYhK6-x7bV6mPUejoVAIr0GoB0",
   authDomain: "rumah-sakit-c3aa7.firebaseapp.com",
+  databaseURL: "https://rumah-sakit-c3aa7-default-rtdb.firebaseio.com",
   projectId: "rumah-sakit-c3aa7",
   storageBucket: "rumah-sakit-c3aa7.appspot.com",
   messagingSenderId: "464554907628",
@@ -24,4 +26,7 @@ const analytics = getAnalytics(app);
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
 
-export { app, analytics, auth };
+// Initialize Realtime Database and get a reference to the service
+const database = getDatabase(app);
+
+export { app, analytics, auth, database };
