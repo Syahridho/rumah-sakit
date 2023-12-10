@@ -1,23 +1,73 @@
 import { connect } from "react-redux";
 import Navbar from "../components/Navbar";
 import Hero from "./../components/Hero";
-// import Servise from "../components/service";
+import PatientInput from "../components/PatientInput";
+import { useState } from "react";
+import { addPatientToAPI } from "../config/redux/action/action";
+import Footer from "../components/Footer";
+import Desc from "../components/Desc";
 
-const Home = ({ user, isLogin, isAdmin }) => {
-  console.log(user);
+const Home = ({ user, isLogin, isAdmin, addPatient }) => {
+  const [patient, setPatient] = useState({
+    id: "",
+    name: "",
+    gender: "Laki-Laki",
+    date: "",
+    phone: "",
+    doctor: "Dr. Nadia Arifin (Umum)",
+    complaints: "",
+  });
+
+  const onChangeInput = (e, type) => {
+    setPatient((prevState) => ({
+      ...prevState,
+      [type]: e.target.value,
+    }));
+    console.log(patient);
+  };
+
+  const onSubmit = () => {
+    const data = {
+      id: +new Date(),
+      name: patient.name,
+      gender: patient.gender,
+      date: patient.date,
+      phone: patient.phone,
+      doctor: patient.doctor,
+      complaints: patient.complaints,
+      email: user.email,
+    };
+    addPatient(data);
+    setPatient({
+      id: "",
+      name: "",
+      gender: "",
+      date: "",
+      phone: "",
+      doctor: "",
+      complaints: "",
+    });
+  };
+
   return (
     <>
       <Navbar />
       <Hero />
-      {/* <Servise /> */}
-      {isLogin ? (
-        <>
-          <h1>Sudah login</h1> <h1>{user.email}</h1>{" "}
-        </>
-      ) : (
-        <h1>belum login</h1>
-      )}
-      {isAdmin ? <h1>Halo Admin</h1> : <h1>Halo Pengunjung</h1>}
+      <Desc isAdmin={isAdmin} />
+      <h1 className="my-8 text-center font-bold text-3xl text-slate-800">
+        Buat Janji
+      </h1>
+      <PatientInput
+        name={patient.name}
+        gender={patient.gender}
+        date={patient.date}
+        phone={patient.phone}
+        doctor={patient.doctor}
+        complaints={patient.complaints}
+        onChange={onChangeInput}
+        onSubmit={onSubmit}
+      />
+      <Footer />
     </>
   );
 };
@@ -28,4 +78,8 @@ const mapStateToProps = (state) => ({
   isAdmin: state.isAdmin,
 });
 
-export default connect(mapStateToProps, null)(Home);
+const mapDispatchToProps = (dispatch) => ({
+  addPatient: (data) => dispatch(addPatientToAPI(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

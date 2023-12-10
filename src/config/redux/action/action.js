@@ -134,9 +134,9 @@ export const addMediceneToAPI = (data) => (dispatch) => {
   });
 };
 
-export const getMediceneFromAPI = () => async (dispatch) => {
+export const getMediceneFromAPI = () => (dispatch) => {
   const url = ref(database, "medicene/");
-  return await new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     onValue(url, (snapShot) => {
       if (snapShot.val() !== null) {
         const data = [];
@@ -184,6 +184,98 @@ export const updateMediceneToAPI = (datas, id) => (dispatch) => {
     })
       .then(() => {
         console.log("berhasil update");
+        resolve(true);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+        reject(errorCode);
+      });
+  });
+};
+
+export const addPatientToAPI = (data) => (dispatch) => {
+  const db = database;
+  push(ref(db, "patient/"), {
+    id: data.id,
+    name: data.name,
+    gender: data.gender,
+    date: data.date,
+    phone: data.phone,
+    doctor: data.doctor,
+    complaints: data.complaints,
+    email: data.email,
+    isDone: false,
+    medicene: "",
+  })
+    .then(() => {
+      console.log("berhasil");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const getPatientFromAPI = () => async (dispatch) => {
+  const url = ref(database, "patient/");
+  return await new Promise((resolve, reject) => {
+    onValue(url, (snapShot) => {
+      console.log(snapShot.val());
+      if (snapShot.val() !== null) {
+        const data = [];
+        Object.keys(snapShot.val()).map((key) => {
+          data.push({
+            id: key,
+            data: snapShot.val()[key],
+          });
+        });
+        dispatch({ type: "CHANGE_PATIENT", value: data });
+      }
+      resolve(snapShot.val());
+    });
+  });
+};
+
+export const updatePatientToAPI = (datas, id) => (dispatch) => {
+  const db = database;
+  const url = ref(db, "patient/" + id);
+  return new Promise((resolve, reject) => {
+    set(url, {
+      id: datas.id,
+      name: datas.name,
+      gender: datas.gender,
+      date: datas.date,
+      phone: datas.phone,
+      doctor: datas.doctor,
+      complaints: datas.complaints,
+      email: datas.email,
+      isDone: false,
+      medicene: "",
+    })
+      .then(() => {
+        console.log("berhasil update");
+        resolve(true);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+        reject(errorCode);
+      });
+  });
+};
+
+export const deletePatientToAPI = (id) => (dispatch) => {
+  const db = database;
+  const url = ref(db, "patient/" + id);
+  return new Promise((resolve, reject) => {
+    remove(url)
+      .then(() => {
+        console.log("id hapus", id);
+        console.log("berhasil");
         resolve(true);
       })
       .catch((error) => {

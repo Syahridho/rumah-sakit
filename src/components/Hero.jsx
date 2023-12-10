@@ -1,14 +1,14 @@
-import logo from "./../assets/logo.png";
+import hero from "./../assets/hero.png";
 
 const Hero = () => {
   return (
-    <div className="container mx-auto p-6 md:p-0">
+    <div id="home" className="container mx-auto p-6 md:p-0">
       <div className="grid grid-cols-2 h-[80vh] items-center md:grid-cols-8 ">
         <div className="col-span-2 md:col-start-6 mx-auto md:order-last">
           <img
-            src={logo}
+            src={hero}
             alt="logo"
-            className="w-72 h-72 drop-shadow-lg md:w-auto md:h-auto md:scale-125"
+            className="w-72 h-auto drop-shadow-lg md:w-auto md:h-auto md:scale-125"
           />
         </div>
         <div className="col-span-2 md:col-start-2">

@@ -9,7 +9,10 @@ const MediceneInput = ({
   cancelUpdate,
 }) => {
   return (
-    <div className="mx-8 flex flex-col md:flex-row md:justify-center md:items-center md:gap-4">
+    <div
+      id="contact"
+      className="mx-8 flex flex-col md:flex-row md:justify-center md:items-center md:gap-4"
+    >
       <div className="flex flex-col md:items-center gap-2  md:flex-row">
         <label htmlFor="title">Nama Obat</label>
         <input

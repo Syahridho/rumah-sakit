@@ -49,32 +49,14 @@ const Navbar = ({ isLoading, isLogin, isAdmin, checkLogin, signOut }) => {
       {navOn ? (
         <div className="mt-1 md:mt-0 xl:me-10">
           <ul className="text-blue-900 flex flex-col items-center gap-1 md:flex-row md:gap-7">
-            <li>
-              <a
-                href="#"
-                className="w-screen text-center bg-stone-50 block py-4 md:w-auto md:bg-transparent md:p-0"
-              >
-                Beranda
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="w-screen text-center bg-stone-50 block py-4 md:w-auto md:bg-transparent md:p-0"
-              >
-                Tentang
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="w-screen text-center bg-stone-50 block py-4 md:w-auto md:bg-transparent md:p-0"
-              >
-                Contact
-              </a>
-            </li>
             {isAdmin ? (
               <>
+                <NavLink
+                  to={"/"}
+                  className="w-screen text-center bg-stone-50 block py-4 md:w-auto md:bg-transparent md:p-0"
+                >
+                  Beranda
+                </NavLink>
                 <NavLink
                   to={"/data-pasien"}
                   className="w-screen text-center bg-stone-50 block py-4 md:w-auto md:bg-transparent md:p-0"
@@ -88,7 +70,34 @@ const Navbar = ({ isLoading, isLogin, isAdmin, checkLogin, signOut }) => {
                   Data Obat
                 </NavLink>
               </>
-            ) : null}
+            ) : (
+              <>
+                <li>
+                  <a
+                    href="#home"
+                    className="w-screen text-center bg-stone-50 block py-4 md:w-auto md:bg-transparent md:p-0"
+                  >
+                    Beranda
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#desc"
+                    className="w-screen text-center bg-stone-50 block py-4 md:w-auto md:bg-transparent md:p-0"
+                  >
+                    Tentang
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#contact"
+                    className="w-screen text-center bg-stone-50 block py-4 md:w-auto md:bg-transparent md:p-0"
+                  >
+                    Contact
+                  </a>
+                </li>
+              </>
+            )}
 
             <li className="flex gap-2 py-8 md:py-0">
               {isLogin ? (
