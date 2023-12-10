@@ -1,39 +1,55 @@
-import { connect } from "react-redux";
 import MediceneCard from "./MediceneCard";
-import { deleteMediceneToAPI } from "../config/redux/action/action";
+import MediceneAlertDelete from "../components/MediceneAlertDelete";
+import { useState } from "react";
 
-const MediceneList = ({ medicene, onDelete }) => {
-  console.log(medicene);
+const MediceneList = ({ medicene, onDelete, onUpdateMode }) => {
+  const [alertDelete, setAlertDelete] = useState(false);
+  const [targetDelete, setTargetDelete] = useState("");
 
-  const handleDelete = (id) => {
-    onDelete(id);
+  const handleDelete = (targetDelete) => {
+    onDelete(targetDelete);
+    setAlertDelete(false);
+  };
+
+  const handleEdit = (medic) => {
+    onUpdateMode(medic);
+  };
+
+  const alert = (id) => {
+    setAlertDelete(true);
+    setTargetDelete(id);
     console.log(id);
   };
 
-  const handleEdit = (id) => {
-    // Implementasi logika edit
-    console.log("Edit button clicked for ID:", id);
-  };
   return (
-    <div className="grid grid-cols-8 lg:grid-cols-6 xl:grid-cols-8 gap-2 px-6 my-8 md:px-0">
-      {medicene.length >= 0 ? (
-        <>
-          {medicene.map((medic) => {
-            return (
-              <MediceneCard
-                key={medic.data.id}
-                id={medic.data.id}
-                title={medic.data.title}
-                stock={medic.data.stock}
-                onDelete={() => handleDelete(medic.id)}
-                onEdit={() => handleEdit(medic.data.id)}
-              />
-            );
-          })}
-        </>
-      ) : (
-        <p>Data Kosong</p>
-      )}
+    <div>
+      <div className="grid grid-cols-8 lg:grid-cols-6 xl:grid-cols-8 gap-2 px-8 my-8 md:px-0">
+        {medicene.length > 0 ? (
+          <>
+            {medicene.map((medic) => {
+              return (
+                <MediceneCard
+                  key={medic.data.id}
+                  id={medic.data.id}
+                  title={medic.data.title}
+                  stock={medic.data.stock}
+                  onDelete={() => alert(medic.id)}
+                  onEdit={() => handleEdit(medic)}
+                />
+              );
+            })}
+          </>
+        ) : (
+          <p>Data Kosong</p>
+        )}
+      </div>
+
+      {alertDelete ? (
+        <MediceneAlertDelete
+          action={() => handleDelete(targetDelete)}
+          cancel={() => setAlertDelete(false)}
+        />
+      ) : null}
     </div>
   );
 };

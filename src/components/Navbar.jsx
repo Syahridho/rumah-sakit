@@ -12,7 +12,6 @@ const Navbar = ({ isLoading, isLogin, isAdmin, checkLogin, signOut }) => {
   useEffect(() => {
     const userLocal = JSON.parse(localStorage.getItem("dataUser"));
     checkLogin(userLocal);
-    console.log(userLocal);
     const handleResize = () => {
       setNavOn(window.innerWidth >= 768);
     };

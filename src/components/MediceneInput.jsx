@@ -4,6 +4,9 @@ const MediceneInput = ({
   titleChange,
   stockChange,
   addMedicene,
+  updateMedicene,
+  isUpdate,
+  cancelUpdate,
 }) => {
   return (
     <div className="mx-8 flex flex-col md:flex-row md:justify-center md:items-center md:gap-4">
@@ -29,12 +32,29 @@ const MediceneInput = ({
           placeholder="Stock"
         />
       </div>
-      <button
-        className="text-center bg-slate-800 w-full text-white rounded py-2 shadow mt-2 md:mt-0  md:w-auto md:px-4"
-        onClick={() => addMedicene()}
-      >
-        Tambah Obat
-      </button>
+      {isUpdate ? (
+        <div className="flex flex-row gap-4">
+          <button
+            className="text-center bg-slate-800 w-full text-white rounded py-2 shadow border border-slate-800 mt-2 md:mt-0  md:w-auto md:px-4"
+            onClick={() => updateMedicene()}
+          >
+            Update Obat
+          </button>
+          <button
+            className="text-slate-800 bg-white w-full text-center rounded py-2 shadow border border-slate-800 mt-2 md:mt-0  md:w-auto md:px-4"
+            onClick={() => cancelUpdate()}
+          >
+            Batalkan
+          </button>
+        </div>
+      ) : (
+        <button
+          className="text-center bg-slate-800 w-full text-white rounded py-2 shadow border border-slate-800 mt-2 md:mt-0  md:w-auto md:px-4"
+          onClick={() => addMedicene()}
+        >
+          Tambah Obat
+        </button>
+      )}
     </div>
   );
 };

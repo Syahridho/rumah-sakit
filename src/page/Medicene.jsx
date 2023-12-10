@@ -5,20 +5,28 @@ import {
   addMediceneToAPI,
   deleteMediceneToAPI,
   getMediceneFromAPI,
+  updateMediceneToAPI,
 } from "../config/redux/action/action";
 import { connect } from "react-redux";
 import MediceneList from "../components/MediceneList";
 
-const Medicene = ({ medicene, addMedicene, getMedicene, deleteMedicene }) => {
+const Medicene = ({
+  medicene,
+  addMedicene,
+  getMedicene,
+  deleteMedicene,
+  updateMedicene,
+}) => {
   const [inputMedicene, setInputMedicene] = useState({
     id: "",
     title: "",
     stock: "",
   });
+  const [unique, setUnique] = useState("");
+  const [isUpadete, setIsUpdate] = useState(false);
 
   useEffect(() => {
     getMedicene();
-    console.log("page", medicene);
   }, []);
 
   const onTitleChange = (e) => {
@@ -26,7 +34,6 @@ const Medicene = ({ medicene, addMedicene, getMedicene, deleteMedicene }) => {
       ...prevState,
       title: e.target.value,
     }));
-    console.log(inputMedicene.title);
   };
 
   const onStockChange = (e) => {
@@ -34,7 +41,6 @@ const Medicene = ({ medicene, addMedicene, getMedicene, deleteMedicene }) => {
       ...prevState,
       stock: e.target.value,
     }));
-    console.log(inputMedicene.stock);
   };
 
   const onSubmitAdd = () => {
@@ -43,7 +49,6 @@ const Medicene = ({ medicene, addMedicene, getMedicene, deleteMedicene }) => {
       title: inputMedicene.title,
       stock: inputMedicene.stock,
     };
-    console.log(data);
     addMedicene(data);
     setInputMedicene({
       id: "",
@@ -54,6 +59,37 @@ const Medicene = ({ medicene, addMedicene, getMedicene, deleteMedicene }) => {
 
   const onDelete = (id) => {
     deleteMedicene(id);
+  };
+
+  const onUpdate = () => {
+    const res = updateMedicene(inputMedicene, unique).catch((error) => error);
+    if (res) {
+      setIsUpdate(false);
+      setInputMedicene({
+        id: "",
+        title: "",
+        stock: "",
+      });
+    }
+  };
+
+  const onModeUpdate = (medic) => {
+    setUnique(medic.id);
+    setInputMedicene({
+      id: medic.data.id,
+      title: medic.data.title,
+      stock: medic.data.stock,
+    });
+    setIsUpdate(true);
+  };
+
+  const cancelUpdate = () => {
+    setInputMedicene({
+      id: "",
+      title: "",
+      stock: "",
+    });
+    setIsUpdate(false);
   };
 
   return (
@@ -69,8 +105,15 @@ const Medicene = ({ medicene, addMedicene, getMedicene, deleteMedicene }) => {
           titleChange={onTitleChange}
           stockChange={onStockChange}
           addMedicene={onSubmitAdd}
+          updateMedicene={onUpdate}
+          isUpdate={isUpadete}
+          cancelUpdate={cancelUpdate}
         />
-        <MediceneList medicene={medicene} onDelete={onDelete} />
+        <MediceneList
+          medicene={medicene}
+          onDelete={onDelete}
+          onUpdateMode={onModeUpdate}
+        />
       </div>
     </>
   );
@@ -85,6 +128,7 @@ const mapDispatchToProps = (dispatch) => ({
   addMedicene: (data) => dispatch(addMediceneToAPI(data)),
   getMedicene: () => dispatch(getMediceneFromAPI()),
   deleteMedicene: (id) => dispatch(deleteMediceneToAPI(id)),
+  updateMedicene: (datas, id) => dispatch(updateMediceneToAPI(datas, id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Medicene);

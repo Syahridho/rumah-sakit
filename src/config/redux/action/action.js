@@ -6,7 +6,7 @@ import {
 } from "firebase/auth";
 import { auth, database } from "./../../firebase/firebase";
 
-import { onValue, push, ref, remove } from "firebase/database";
+import { onValue, push, ref, remove, set } from "firebase/database";
 
 export const tes = () => (dispatch) => {
   dispatch({ type: "TES", value: true });
@@ -146,7 +146,6 @@ export const getMediceneFromAPI = () => async (dispatch) => {
             data: snapShot.val()[key],
           });
         });
-        console.log("action", data);
         dispatch({ type: "CHANGE_MEDICENE", value: data });
       }
       resolve(snapShot.val());
@@ -160,7 +159,31 @@ export const deleteMediceneToAPI = (id) => (dispatch) => {
   return new Promise((resolve, reject) => {
     remove(url)
       .then(() => {
+        console.log("id hapus", id);
         console.log("berhasil");
+        resolve(true);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+        reject(errorCode);
+      });
+  });
+};
+
+export const updateMediceneToAPI = (datas, id) => (dispatch) => {
+  const db = database;
+  const url = ref(db, "medicene/" + id);
+  return new Promise((resolve, reject) => {
+    set(url, {
+      id: datas.id,
+      title: datas.title,
+      stock: datas.stock,
+    })
+      .then(() => {
+        console.log("berhasil update");
         resolve(true);
       })
       .catch((error) => {
