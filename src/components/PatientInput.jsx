@@ -10,11 +10,15 @@ const PatientInput = ({
   onUpdate,
   isUpdate,
   onCancel,
+  alertLogin,
 }) => {
   return (
     <div className="flex justify-center">
-      <div className="flex flex-col w-full mx-8 md:w-96 md:gap-4">
-        <div className="flex flex-col gap-2  ">
+      <form
+        className="flex flex-col w-full mx-8 md:w-96 md:gap-4"
+        onSubmit={onSubmit}
+      >
+        <div className="flex flex-col gap-2">
           <label htmlFor="name">Nama Pasien</label>
           <input
             type="text"
@@ -23,6 +27,7 @@ const PatientInput = ({
             value={name}
             onChange={(e) => onChange(e, "name")}
             placeholder="Nama"
+            required
           />
         </div>
         <div className="flex flex-col gap-2 ">
@@ -33,6 +38,7 @@ const PatientInput = ({
             value={gender}
             onChange={(e) => onChange(e, "gender")}
             className="border mb-2 px-2 py-1 rounded-sm md:mb-0"
+            required
           >
             <option value="Laki-Laki">Laki-Laki</option>
             <option value="Perempuan">Perempuan</option>
@@ -46,6 +52,7 @@ const PatientInput = ({
             value={date}
             onChange={(e) => onChange(e, "date")}
             className="border px-2 py-1 mb-2  md:mb-0"
+            required
           />
         </div>
         <div className="flex flex-col gap-2 ">
@@ -57,6 +64,7 @@ const PatientInput = ({
             onChange={(e) => onChange(e, "phone")}
             className="border px-2 py-1 mb-2  md:mb-0"
             placeholder="+628"
+            required
           />
         </div>
         <div className="flex flex-col gap-2 ">
@@ -67,6 +75,7 @@ const PatientInput = ({
             className="border mb-2 px-2 py-1 rounded-sm md:mb-0"
             value={doctor}
             onChange={(e) => onChange(e, "doctor")}
+            required
           >
             <option value="Dr. Nadia Arifin (Umum)">
               Dr. Nadia Arifin (Umum)
@@ -105,8 +114,15 @@ const PatientInput = ({
             value={complaints}
             onChange={(e) => onChange(e, "complaints")}
             placeholder="Apa keluhan anda ?"
+            required
           ></textarea>
         </div>
+        {alertLogin ? (
+          <div className="text-red-500">
+            <p>Harus login terlebih dahulu</p>
+          </div>
+        ) : null}
+
         {isUpdate ? (
           <div className="flex flex-row gap-4">
             <button
@@ -130,7 +146,7 @@ const PatientInput = ({
             Tambah Pasien
           </button>
         )}
-      </div>
+      </form>
     </div>
   );
 };

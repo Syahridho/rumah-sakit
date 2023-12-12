@@ -18,6 +18,8 @@ const Home = ({ user, isLogin, isAdmin, addPatient }) => {
     complaints: "",
   });
 
+  const [alertLogin, setAlertLogin] = useState(false);
+
   const onChangeInput = (e, type) => {
     setPatient((prevState) => ({
       ...prevState,
@@ -27,26 +29,31 @@ const Home = ({ user, isLogin, isAdmin, addPatient }) => {
   };
 
   const onSubmit = () => {
-    const data = {
-      id: +new Date(),
-      name: patient.name,
-      gender: patient.gender,
-      date: patient.date,
-      phone: patient.phone,
-      doctor: patient.doctor,
-      complaints: patient.complaints,
-      email: user.email,
-    };
-    addPatient(data);
-    setPatient({
-      id: "",
-      name: "",
-      gender: "",
-      date: "",
-      phone: "",
-      doctor: "",
-      complaints: "",
-    });
+    setAlertLogin(false);
+    if (isLogin) {
+      const data = {
+        id: +new Date(),
+        name: patient.name,
+        gender: patient.gender,
+        date: patient.date,
+        phone: patient.phone,
+        doctor: patient.doctor,
+        complaints: patient.complaints,
+        email: user.email,
+      };
+      addPatient(data);
+      setPatient({
+        id: "",
+        name: "",
+        gender: "",
+        date: "",
+        phone: "",
+        doctor: "",
+        complaints: "",
+      });
+    } else {
+      setAlertLogin(true);
+    }
   };
 
   return (
@@ -58,6 +65,7 @@ const Home = ({ user, isLogin, isAdmin, addPatient }) => {
         Buat Janji
       </h1>
       <PatientInput
+        alertLogin={alertLogin}
         name={patient.name}
         gender={patient.gender}
         date={patient.date}

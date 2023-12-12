@@ -1,8 +1,11 @@
 const MediceneAlertDelete = ({ action, cancel }) => {
   return (
     <div className="flex justify-center items-center ">
-      <div className="absolute top-0 left-0 bg-transparent  w-full h-full"></div>
-      <div className="absolute top-52 z-20">
+      <div
+        className="fixed top-0 left-0 backdrop-blur-sm  w-full h-full"
+        onClick={cancel}
+      ></div>
+      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
         <div className="p-4 border w-64 h-40 bg-white rounded flex gap-4 flex-col justify-center md:w-72">
           <h1 className="font-bold text-xl text-center">
             Yakin ingin menghapus?

@@ -1,13 +1,23 @@
 import { useState } from "react";
 import PatientCard from "./PatientCard";
+import MediceneAlertDelete from "./MediceneAlertDelete";
 
 const PatientList = ({ patients, onDelete, onModeUpdate }) => {
-  const handleDelete = (id) => {
-    onDelete(id);
+  const [alertDelete, setAlertDelete] = useState(false);
+  const [targetDelete, setTargetDelete] = useState("");
+
+  const handleDelete = (targetDelete) => {
+    onDelete(targetDelete);
+    setAlertDelete(false);
   };
 
   const handleEdit = (patient) => {
     onModeUpdate(patient);
+  };
+
+  const alert = (id) => {
+    setAlertDelete(true);
+    setTargetDelete(id);
   };
 
   return (
@@ -26,7 +36,7 @@ const PatientList = ({ patients, onDelete, onModeUpdate }) => {
                 doctor={patient.data.doctor}
                 complaint={patient.data.complaints}
                 isDone={patient.data.isDone}
-                onDelete={() => handleDelete(patient.id)}
+                onDelete={() => alert(patient.id)}
                 onUpdate={() => handleEdit(patient)}
               />
             );
@@ -35,6 +45,12 @@ const PatientList = ({ patients, onDelete, onModeUpdate }) => {
       ) : (
         <p>Data Kosong</p>
       )}
+      {alertDelete ? (
+        <MediceneAlertDelete
+          action={() => handleDelete(targetDelete)}
+          cancel={() => setAlertDelete(false)}
+        />
+      ) : null}
     </div>
   );
 };
