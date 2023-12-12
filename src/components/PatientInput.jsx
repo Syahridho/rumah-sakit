@@ -77,30 +77,18 @@ const PatientInput = ({
             onChange={(e) => onChange(e, "doctor")}
             required
           >
-            <option value="Dr. Nadia Arifin (Umum)">
-              Dr. Nadia Arifin (Umum)
-            </option>
-            <option value="Dr. Adrian Putra (Anak)">
-              Dr. Adrian Putra (Anak)
-            </option>
-            <option value="Dr. Lina Santosa (THT)">
-              Dr. Lina Santosa (THT)
-            </option>
-            <option value="Dr. Raditya Pratama (Kulit)">
+            <option value="nadia@gmail.com">Dr. Nadia Arifin (Umum)</option>
+            <option value="adrian@gmail.com">Dr. Adrian Putra (Anak)</option>
+            <option value="lina@gmail.com">Dr. Lina Santosa (THT)</option>
+            <option value="raditya@gmail.com">
               Dr. Raditya Pratama (Kulit)
             </option>
-            <option value="Dr. Anita Wijaya (Gigi)">
-              Dr. Anita Wijaya (Gigi)
-            </option>
-            <option value="Dr. Farida Rahayu (Mata)">
-              Dr. Farida Rahayu (Mata)
-            </option>
-            <option value="Dr. Amanda Susanto (Jantung)">
+            <option value="anita@gmail.com">Dr. Anita Wijaya (Gigi)</option>
+            <option value="farida@gmail.com">Dr. Farida Rahayu (Mata)</option>
+            <option value="amanda@gmail.com">
               Dr. Amanda Susanto (Jantung)
             </option>
-            <option value="Dr. Dian Utami (Psikolog)">
-              Dr. Dian Utami (Psikolog)
-            </option>
+            <option value="dian@gmail.com">Dr. Dian Utami (Psikolog)</option>
           </select>
         </div>
         <div className="flex flex-col gap-2 ">
