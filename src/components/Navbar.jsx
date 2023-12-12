@@ -69,6 +69,12 @@ const Navbar = ({ isLoading, isLogin, isAdmin, checkLogin, signOut }) => {
                 >
                   Data Obat
                 </NavLink>
+                <NavLink
+                  to={"/doctor"}
+                  className="w-screen text-center bg-stone-50 block py-4 md:w-auto md:bg-transparent md:p-0"
+                >
+                  Data Docter
+                </NavLink>
               </>
             ) : (
               <>

@@ -9,9 +9,11 @@ import {
 } from "../config/redux/action/action";
 import { useEffect, useState } from "react";
 import PatientList from "../components/PatientList";
+import { useNavigate } from "react-router-dom";
 
 const Patient = ({
   user,
+  isAdmin,
   patients,
   addPatient,
   getPatient,
@@ -27,11 +29,14 @@ const Patient = ({
     doctor: "Dr. Nadia Arifin (Umum)",
     complaints: "",
   });
-
+  const navigate = useNavigate();
   const [unique, setUnique] = useState("");
   const [isUpdete, setIsUpdate] = useState(false);
 
   useEffect(() => {
+    if (isAdmin === false) {
+      navigate("/");
+    }
     getPatient();
     console.log(patients);
   }, []);
@@ -152,6 +157,7 @@ const Patient = ({
 };
 
 const mapStateToProps = (state) => ({
+  isAdmin: state.isAdmin,
   patients: state.patient,
   user: state.user,
 });
