@@ -8,8 +8,8 @@ import Regis from "./Regis";
 import Forget from "./Forget";
 import Patient from "./Patient";
 import Medicene from "./Medicene";
-import Doctor from "./Doctor";
 import NotFound from "./NotFound";
+import PatientDoctor from "./PatientDoctor";
 
 const App = () => {
   return (
@@ -21,8 +21,8 @@ const App = () => {
           <Route path={"/regis"} element={<Regis />} />
           <Route path={"/forget"} element={<Forget />} />
           <Route path={"/data-pasien"} element={<Patient />} />
+          <Route path={"/data-pasien-dokter"} element={<PatientDoctor />} />
           <Route path={"/data-obat"} element={<Medicene />} />
-          <Route path={"/doctor"} element={<Doctor />} />
           <Route path={"*"} element={<NotFound />} />
         </Routes>
       </Router>

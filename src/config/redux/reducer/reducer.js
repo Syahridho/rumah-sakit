@@ -2,6 +2,7 @@ const initialState = {
   isLoading: false,
   isLogin: false,
   isAdmin: false,
+  isDoctor: false,
   user: {},
   medicene: [],
   patient: [],
@@ -23,6 +24,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isAdmin: action.value,
+      };
+    case "CHANGE_ISDOCTOR":
+      return {
+        ...state,
+        isDoctor: action.value,
       };
     case "CHANGE_USER":
       return {

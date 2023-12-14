@@ -7,7 +7,7 @@ import { addPatientToAPI } from "../config/redux/action/action";
 import Footer from "../components/Footer";
 import Desc from "../components/Desc";
 
-const Home = ({ user, isLogin, isAdmin, addPatient }) => {
+const Home = ({ user, isLogin, isAdmin, addPatient, isDoctor }) => {
   const [patient, setPatient] = useState({
     id: "",
     name: "",
@@ -60,7 +60,7 @@ const Home = ({ user, isLogin, isAdmin, addPatient }) => {
     <>
       <Navbar />
       <Hero />
-      <Desc isAdmin={isAdmin} />
+      <Desc isAdmin={isAdmin} isDoctor={isDoctor} />
       <h1 className="my-8 text-center font-bold text-3xl text-slate-800">
         Buat Janji
       </h1>
@@ -84,6 +84,7 @@ const mapStateToProps = (state) => ({
   user: state.user,
   isLogin: state.isLogin,
   isAdmin: state.isAdmin,
+  isDoctor: state.isDoctor,
 });
 
 const mapDispatchToProps = (dispatch) => ({

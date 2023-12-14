@@ -34,7 +34,26 @@ const PatientCard = ({
         </tr>
         <tr>
           <td>Dokter</td>
-          <td>: {doctor}</td>
+          <td>
+            : {""}
+            {doctor === "nadia@gmail.com"
+              ? "Dr. Nadia Arifin (Umum)"
+              : doctor === "adrian@gmail.com"
+              ? "Dr. Adrian Putra (Anak)"
+              : doctor === "lina@gmail.com"
+              ? "Dr. Lina Santosa (THT)"
+              : doctor === "raditya@gmail.com"
+              ? "Dr. Raditya Pratama (Kulit)"
+              : doctor === "anita@gmail.com"
+              ? "Dr. Anita Wijaya (Gigi)"
+              : doctor === "farid@gmail.com"
+              ? "Dr. Farida Rahayu (Mata)"
+              : doctor === "amanda@gmail.com"
+              ? "Dr. Amanda Susanto (Jantung)"
+              : doctor === "dian@gmail.com"
+              ? "Dr. Dian Utami (Psikolog)"
+              : "Dokter"}
+          </td>
         </tr>
         <tr>
           <td>Keluhan</td>

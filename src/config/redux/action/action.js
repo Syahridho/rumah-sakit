@@ -49,9 +49,40 @@ export const loginUserAPI = (data) => (dispatch) => {
           emailVerified: user.emailVerified,
           refrastToken: user.refreshToken,
         };
-        if (user.email === "admin@gmail.com") {
-          dispatch({ type: "CHANGE_ISADMIN", value: true });
+
+        switch (user.email) {
+          case "admin@gmail.com":
+            dispatch({ type: "CHANGE_ISADMIN", value: true });
+            break;
+          case "nadia@gmail.com":
+            dispatch({ type: "CHANGE_ISDOCTOR", value: true });
+            break;
+          case "adrian@gmail.com":
+            dispatch({ type: "CHANGE_ISDOCTOR", value: true });
+            break;
+          case "lina@gmail.com":
+            dispatch({ type: "CHANGE_ISDOCTOR", value: true });
+            break;
+          case "raditya@gmail.com":
+            dispatch({ type: "CHANGE_ISDOCTOR", value: true });
+            break;
+          case "anita@gmail.com":
+            dispatch({ type: "CHANGE_ISDOCTOR", value: true });
+            break;
+          case "farid@gmail.com":
+            dispatch({ type: "CHANGE_ISDOCTOR", value: true });
+            break;
+          case "amanda@gmail.com":
+            dispatch({ type: "CHANGE_ISDOCTOR", value: true });
+            break;
+          case "dian@gmail.com":
+            dispatch({ type: "CHANGE_ISDOCTOR", value: true });
+            break;
+          default:
+            dispatch({ type: "CHANGE_ISDOCTOR", value: false });
+            dispatch({ type: "CHANGE_ISADMIN", value: false });
         }
+
         localStorage.setItem("dataUser", JSON.stringify(dataUser));
         dispatch({ type: "CHANGE_USER", value: dataUser });
         dispatch({ type: "CHANGE_ISLOGIN", value: true });

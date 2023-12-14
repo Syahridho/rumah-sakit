@@ -6,7 +6,14 @@ import ButtonLogin from "./ButtonLogin";
 import ButtonSignOut from "./ButtonSignOut";
 import { NavLink } from "react-router-dom";
 
-const Navbar = ({ isLoading, isLogin, isAdmin, checkLogin, signOut }) => {
+const Navbar = ({
+  isLoading,
+  isLogin,
+  isAdmin,
+  isDoctor,
+  checkLogin,
+  signOut,
+}) => {
   const [navOn, setNavOn] = useState(true);
 
   useEffect(() => {
@@ -70,6 +77,21 @@ const Navbar = ({ isLoading, isLogin, isAdmin, checkLogin, signOut }) => {
                   Data Obat
                 </NavLink>
               </>
+            ) : isDoctor ? (
+              <>
+                <NavLink
+                  to={"/"}
+                  className="w-screen text-center bg-stone-50 block py-4 md:w-auto md:bg-transparent md:p-0"
+                >
+                  Beranda
+                </NavLink>
+                <NavLink
+                  to={"/data-pasien-dokter"}
+                  className="w-screen text-center bg-stone-50 block py-4 md:w-auto md:bg-transparent md:p-0"
+                >
+                  Pasien Dokter
+                </NavLink>
+              </>
             ) : (
               <>
                 <li>
@@ -124,6 +146,7 @@ const mapStateToProps = (state) => ({
   isLoading: state.isLoading,
   isLogin: state.isLogin,
   isAdmin: state.isAdmin,
+  isDoctor: state.isDoctor,
 });
 
 const mapDispatchToProps = (dispatch) => ({
