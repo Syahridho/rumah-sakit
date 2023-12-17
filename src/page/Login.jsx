@@ -53,7 +53,6 @@ const Login = ({ isLoading, loginAPI }) => {
       ...prevState,
       email: e.target.value,
     }));
-    console.log(form);
   };
 
   const onPasswordChange = (e) => {
@@ -61,7 +60,6 @@ const Login = ({ isLoading, loginAPI }) => {
       ...prevState,
       password: e.target.value,
     }));
-    console.log(form);
   };
 
   return (

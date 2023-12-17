@@ -14,7 +14,7 @@ const PatientInput = ({
 }) => {
   return (
     <div className="flex justify-center">
-      <form
+      <div
         className="flex flex-col w-full mx-8 md:w-96 md:gap-4"
         onSubmit={onSubmit}
       >
@@ -134,7 +134,7 @@ const PatientInput = ({
             Tambah Pasien
           </button>
         )}
-      </form>
+      </div>
     </div>
   );
 };

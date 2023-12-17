@@ -1,27 +1,36 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import Navbar from "../components/Navbar";
-import PatientList from "../components/PatientList";
-import { getPatientFromAPI } from "../config/redux/action/action";
+import {
+  getPatientFromAPI,
+  giveMediceneToAPI,
+} from "../config/redux/action/action";
+import PatientDocterList from "../components/PatientDocterList";
 
-const PatientDoctor = ({ user, isAdmin, isDoctor, patients, getPatient }) => {
+const PatientDoctor = ({
+  user,
+  isAdmin,
+  isDoctor,
+  patients,
+  getPatient,
+  giveMedicene,
+}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isDoctor === false) {
+    if (isDoctor === false && isAdmin === false) {
       navigate("/");
     }
-    getPatient();
-    console.log(patients);
-  }, []);
-  console.log(patients);
-  const onDelete = () => {
-    console.log("halo");
-  };
 
-  const onModeUpdate = () => {
-    console.log("halo as");
+    if (user === null) {
+      navigate("/login");
+    }
+    getPatient();
+  }, []);
+
+  const onGive = (datas, medicene, id) => {
+    giveMedicene(datas, medicene, id);
   };
 
   return (
@@ -31,12 +40,11 @@ const PatientDoctor = ({ user, isAdmin, isDoctor, patients, getPatient }) => {
         <h1 className="my-8 text-center font-bold text-3xl text-slate-800">
           Data Pasien Anda
         </h1>
-        <PatientList
+        <PatientDocterList
           patients={patients.filter(
             (patient) => patient.data.doctor === user.email
           )}
-          onDelete={onDelete}
-          onModeUpdate={onModeUpdate}
+          onGive={onGive}
         />
       </div>
     </>
@@ -52,6 +60,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getPatient: () => dispatch(getPatientFromAPI()),
+  giveMedicene: (datas, medicene, id) =>
+    dispatch(giveMediceneToAPI(datas, medicene, id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PatientDoctor);

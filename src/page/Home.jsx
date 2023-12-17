@@ -2,12 +2,26 @@ import { connect } from "react-redux";
 import Navbar from "../components/Navbar";
 import Hero from "./../components/Hero";
 import PatientInput from "../components/PatientInput";
-import { useState } from "react";
-import { addPatientToAPI } from "../config/redux/action/action";
+import { useEffect, useState } from "react";
+import {
+  addPatientToAPI,
+  deletePatientToAPI,
+  getPatientFromAPI,
+} from "../config/redux/action/action";
 import Footer from "../components/Footer";
 import Desc from "../components/Desc";
+import VisitorList from "../components/VisitorList";
 
-const Home = ({ user, isLogin, isAdmin, addPatient, isDoctor }) => {
+const Home = ({
+  user,
+  isLogin,
+  isAdmin,
+  patients,
+  addPatient,
+  isDoctor,
+  getPatient,
+  deletePatient,
+}) => {
   const [patient, setPatient] = useState({
     id: "",
     name: "",
@@ -18,6 +32,10 @@ const Home = ({ user, isLogin, isAdmin, addPatient, isDoctor }) => {
     complaints: "",
   });
 
+  useEffect(() => {
+    getPatient();
+  }, []);
+
   const [alertLogin, setAlertLogin] = useState(false);
 
   const onChangeInput = (e, type) => {
@@ -25,7 +43,6 @@ const Home = ({ user, isLogin, isAdmin, addPatient, isDoctor }) => {
       ...prevState,
       [type]: e.target.value,
     }));
-    console.log(patient);
   };
 
   const onSubmit = () => {
@@ -56,6 +73,10 @@ const Home = ({ user, isLogin, isAdmin, addPatient, isDoctor }) => {
     }
   };
 
+  const onDelete = (id) => {
+    deletePatient(id);
+  };
+
   return (
     <>
       <Navbar />
@@ -64,6 +85,7 @@ const Home = ({ user, isLogin, isAdmin, addPatient, isDoctor }) => {
       <h1 className="my-8 text-center font-bold text-3xl text-slate-800">
         Buat Janji
       </h1>
+
       <PatientInput
         alertLogin={alertLogin}
         name={patient.name}
@@ -75,6 +97,15 @@ const Home = ({ user, isLogin, isAdmin, addPatient, isDoctor }) => {
         onChange={onChangeInput}
         onSubmit={onSubmit}
       />
+      {isDoctor ? null : (
+        <VisitorList
+          patients={patients.filter(
+            (patient) => patient.data.email === user.email
+          )}
+          onDelete={onDelete}
+        />
+      )}
+
       <Footer />
     </>
   );
@@ -85,10 +116,13 @@ const mapStateToProps = (state) => ({
   isLogin: state.isLogin,
   isAdmin: state.isAdmin,
   isDoctor: state.isDoctor,
+  patients: state.patient,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addPatient: (data) => dispatch(addPatientToAPI(data)),
+  getPatient: () => dispatch(getPatientFromAPI()),
+  deletePatient: (id) => dispatch(deletePatientToAPI(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

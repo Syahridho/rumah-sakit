@@ -4,7 +4,7 @@ import { signOutAPI, checkLogin } from "../config/redux/action/action";
 import { connect } from "react-redux";
 import ButtonLogin from "./ButtonLogin";
 import ButtonSignOut from "./ButtonSignOut";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Navbar = ({
   isLoading,
@@ -15,6 +15,7 @@ const Navbar = ({
   signOut,
 }) => {
   const [navOn, setNavOn] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userLocal = JSON.parse(localStorage.getItem("dataUser"));
@@ -36,6 +37,8 @@ const Navbar = ({
 
     if (res === false) {
       console.log(res);
+    } else if (res === true) {
+      navigate("/");
     }
   };
 

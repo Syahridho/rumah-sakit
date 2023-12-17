@@ -18,9 +18,12 @@ const Hero = () => {
           <p className="text-sky-700 mb-3 mt-1">
             Mempermudah anda dalam membuat janji dengan dokter
           </p>
-          <button className="bg-sky-800 text-white px-4 py-2 rounded shadow transition duration-500 hover:shadow-xl hover:bg-sky-950">
+          <a
+            href="#desc"
+            className="bg-sky-800 text-white px-4 py-2 rounded shadow transition duration-500 hover:shadow-xl hover:bg-sky-950"
+          >
             Buat Janji
-          </button>
+          </a>
         </div>
       </div>
     </div>

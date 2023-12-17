@@ -38,7 +38,6 @@ const Patient = ({
       navigate("/");
     }
     getPatient();
-    console.log(patients);
   }, []);
 
   const onChangeInput = (e, type) => {
@@ -46,7 +45,6 @@ const Patient = ({
       ...prevState,
       [type]: e.target.value,
     }));
-    console.log(patient);
   };
 
   const onSubmit = () => {
@@ -89,7 +87,6 @@ const Patient = ({
   };
 
   const onModeUpdate = (patient) => {
-    console.log(patient);
     setUnique(patient.id);
     setPatient({
       id: patient.data.id,

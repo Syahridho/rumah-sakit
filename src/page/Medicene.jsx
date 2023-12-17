@@ -9,6 +9,7 @@ import {
 } from "../config/redux/action/action";
 import { connect } from "react-redux";
 import MediceneList from "../components/MediceneList";
+import { useNavigate } from "react-router-dom";
 
 const Medicene = ({
   medicene,
@@ -24,8 +25,12 @@ const Medicene = ({
   });
   const [unique, setUnique] = useState("");
   const [isUpadete, setIsUpdate] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (isAdmin === false) {
+      navigate("/");
+    }
     getMedicene();
   }, []);
 

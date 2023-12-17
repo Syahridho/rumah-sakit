@@ -10,17 +10,14 @@ import { onValue, push, ref, remove, set } from "firebase/database";
 
 export const tes = () => (dispatch) => {
   dispatch({ type: "TES", value: true });
-  console.log("tes");
 };
 
 export const registerUserAPI = (data) => (dispatch) => {
   return new Promise((resolve, reject) => {
     dispatch({ type: "CHANGE_ISLOADING", value: true });
-    console.log(data);
     return createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
         dispatch({ type: "CHANGE_ISLOADING", value: false });
         resolve(true);
       })
@@ -38,11 +35,9 @@ export const registerUserAPI = (data) => (dispatch) => {
 export const loginUserAPI = (data) => (dispatch) => {
   return new Promise((resolve, reject) => {
     dispatch({ type: "CHANGE_ISLOADING", value: true });
-    console.log(data);
     return signInWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
         const dataUser = {
           email: user.email,
           uid: user.id,
@@ -108,6 +103,7 @@ export const signOutAPI = () => (dispatch) => {
         dispatch({ type: "CHANGE_USER", value: {} });
         dispatch({ type: "CHANGE_ISLOGIN", value: false });
         dispatch({ type: "CHANGE_ISLOADING", value: false });
+        dispatch({ type: "CHANGE_ISDOCTOR", value: false });
         dispatch({ type: "CHANGE_ISADMIN", value: false });
         localStorage.removeItem("dataUser");
         resolve(true);
@@ -126,7 +122,6 @@ export const signOutAPI = () => (dispatch) => {
 export const resetPasswordAPI = (email) => (dispatch) => {
   return new Promise((resolve, reject) => {
     dispatch({ type: "CHANGE_ISLOADING", value: true });
-    console.log(email);
     return sendPasswordResetEmail(auth, email)
       .then(() => {
         dispatch({ type: "CHANGE_ISLOADING", value: false });
@@ -253,7 +248,6 @@ export const getPatientFromAPI = () => async (dispatch) => {
   const url = ref(database, "patient/");
   return await new Promise((resolve, reject) => {
     onValue(url, (snapShot) => {
-      console.log(snapShot.val());
       if (snapShot.val() !== null) {
         const data = [];
         Object.keys(snapShot.val()).map((key) => {
@@ -307,6 +301,36 @@ export const deletePatientToAPI = (id) => (dispatch) => {
       .then(() => {
         console.log("id hapus", id);
         console.log("berhasil");
+        resolve(true);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+        reject(errorCode);
+      });
+  });
+};
+
+export const giveMediceneToAPI = (datas, medicene, id) => (dispatch) => {
+  const db = database;
+  const url = ref(db, "patient/" + id);
+  return new Promise((resolve, reject) => {
+    set(url, {
+      id: datas.id,
+      name: datas.name,
+      gender: datas.gender,
+      date: datas.date,
+      phone: datas.phone,
+      doctor: datas.doctor,
+      complaints: datas.complaints,
+      email: datas.email,
+      isDone: true,
+      medicene: medicene,
+    })
+      .then(() => {
+        console.log("berhasil update");
         resolve(true);
       })
       .catch((error) => {

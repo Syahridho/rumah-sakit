@@ -24,7 +24,6 @@ const Regis = ({ isLoading, regisAPI }) => {
     setInvalidEmail(false);
     setInvalidPassword(false);
     const res = await regisAPI(form).catch((err) => err);
-    console.log("regis", res);
     if (res === true) {
       setForm({
         email: "",
@@ -57,7 +56,6 @@ const Regis = ({ isLoading, regisAPI }) => {
       ...prevState,
       email: e.target.value,
     }));
-    console.log(form);
   };
 
   const onPasswordChange = (e) => {
@@ -65,7 +63,6 @@ const Regis = ({ isLoading, regisAPI }) => {
       ...prevState,
       password: e.target.value,
     }));
-    console.log(form);
   };
 
   return (
