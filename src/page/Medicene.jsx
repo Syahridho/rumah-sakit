@@ -12,6 +12,7 @@ import MediceneList from "../components/MediceneList";
 import { useNavigate } from "react-router-dom";
 
 const Medicene = ({
+  isAdmin,
   medicene,
   addMedicene,
   getMedicene,
@@ -127,6 +128,7 @@ const Medicene = ({
 const mapStateToProps = (state) => ({
   isLoading: state.isLoading,
   medicene: state.medicene,
+  isAdmin: state.isAdmin,
 });
 
 const mapDispatchToProps = (dispatch) => ({
