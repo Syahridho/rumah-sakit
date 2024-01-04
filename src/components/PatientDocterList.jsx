@@ -1,33 +1,72 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PatientDocterCard from "./PatientDocterCard";
 import GiveMedicene from "./GiveMedicene";
+import { connect } from "react-redux";
+import {
+  getMediceneFromAPI,
+  minusMediceneToAPI,
+} from "../config/redux/action/action";
 
-const PatientDocterList = ({ patients, onGive }) => {
+const PatientDocterList = ({
+  patients,
+  onGive,
+  getMedicene,
+  medicene,
+  minusMediceneToAPI,
+}) => {
   const [alertGive, setAlertGive] = useState(false);
   const [target, setTarget] = useState("");
   const [nameTarget, setNameTarget] = useState("");
   const [complaintTarget, setComplaintTarget] = useState("");
   const [data, setData] = useState();
-
-  const [medicene, setMedicene] = useState("");
-
-  const alert = (id, name, complaint, data) => {
+  const [patient, setPatient] = useState();
+  const [giveMedice, setGiveMedice] = useState([]);
+  const alert = (id, name, complaint, data, patient) => {
     setData(data);
     setAlertGive(true);
     setNameTarget(name);
     setComplaintTarget(complaint);
     setTarget(id);
-    console.log(data);
+    setPatient(patient);
   };
 
-  const onChange = (e) => {
-    setMedicene(e.target.value);
-  };
+  useEffect(() => {
+    getMedicene();
+  }, []);
 
   const onSubmit = () => {
-    onGive(data, medicene, target);
+    onGive(patient.data, giveMedice, patient.id);
+    setGiveMedice([]);
     setAlertGive(false);
-    setMedicene("");
+    // disini
+    for (let i = 0; i < giveMedice.length; i++) {
+      minusMediceneToAPI(giveMedice[i], giveMedice[i].id, giveMedice[i].qty);
+    }
+  };
+
+  const minusMedicene = (id) => {
+    setGiveMedice((prevMedicenes) =>
+      prevMedicenes.filter((medicene) => medicene.id !== id)
+    );
+  };
+  const plusMedicene = (medicene) => {
+    const itemInCart = giveMedice.find((item) => item.id === medicene.id);
+    if (itemInCart) {
+      setGiveMedice(
+        giveMedice.map((item) =>
+          item.id === medicene.id ? { ...item, qty: item.qty + 1 } : item
+        )
+      );
+    } else {
+      setGiveMedice((prevMedicenes) => [
+        ...prevMedicenes,
+        {
+          id: medicene.id,
+          title: medicene.title,
+          qty: 1,
+        },
+      ]);
+    }
   };
 
   return (
@@ -52,7 +91,8 @@ const PatientDocterList = ({ patients, onGive }) => {
                     patient.id,
                     patient.data.name,
                     patient.data.complaints,
-                    patient.data
+                    patient.data,
+                    patient
                   )
                 }
               />
@@ -65,15 +105,27 @@ const PatientDocterList = ({ patients, onGive }) => {
       {alertGive ? (
         <GiveMedicene
           name={nameTarget}
+          data={patient}
           complaint={complaintTarget}
-          action={() => onSubmit()}
+          action={() => onSubmit}
           cancel={() => setAlertGive(false)}
-          onChange={(e) => onChange(e)}
-          value={medicene}
+          minus={minusMedicene}
+          plus={plusMedicene}
+          giveMedicene={giveMedice}
         />
       ) : null}
     </div>
   );
 };
 
-export default PatientDocterList;
+const mapStateToProps = (state) => ({
+  medicene: state.medicene,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getMedicene: () => dispatch(getMediceneFromAPI()),
+  minusMediceneToAPI: (datas, id, minus) =>
+    dispatch(minusMediceneToAPI(datas, id, minus)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PatientDocterList);

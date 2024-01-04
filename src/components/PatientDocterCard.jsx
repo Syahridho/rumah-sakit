@@ -67,7 +67,16 @@ const PatientDocterCard = ({
         {isDone ? (
           <tr>
             <td>Obat</td>
-            <td>: {medicene}</td>
+            <td>
+              :{" "}
+              {Array.isArray(medicene) && medicene.length > 0 ? (
+                medicene.map((medic) => (
+                  <span key={medic.id}>{medic.title} </span>
+                ))
+              ) : (
+                <span>No medication available</span>
+              )}
+            </td>
           </tr>
         ) : null}
       </table>

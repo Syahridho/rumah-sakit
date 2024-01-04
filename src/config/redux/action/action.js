@@ -315,6 +315,9 @@ export const deletePatientToAPI = (id) => (dispatch) => {
 
 export const giveMediceneToAPI = (datas, medicene, id) => (dispatch) => {
   const db = database;
+  console.log("datas", datas);
+  console.log("medicene", medicene);
+  console.log("id", id);
   const url = ref(db, "patient/" + id);
   return new Promise((resolve, reject) => {
     set(url, {
@@ -328,6 +331,30 @@ export const giveMediceneToAPI = (datas, medicene, id) => (dispatch) => {
       email: datas.email,
       isDone: true,
       medicene: medicene,
+    })
+      .then(() => {
+        console.log("berhasil update");
+        resolve(true);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+        reject(errorCode);
+      });
+  });
+};
+
+export const minusMediceneToAPI = (datas, id, minus) => (dispatch) => {
+  const db = database;
+  const url = ref(db, "medicene/" + id);
+
+  return new Promise((resolve, reject) => {
+    set(url, {
+      id: datas.id,
+      title: datas.title,
+      stock: (100 - minus).toString(),
     })
       .then(() => {
         console.log("berhasil update");
