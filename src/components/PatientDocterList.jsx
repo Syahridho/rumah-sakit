@@ -40,7 +40,9 @@ const PatientDocterList = ({
     setAlertGive(false);
     // disini
     for (let i = 0; i < giveMedice.length; i++) {
-      minusMediceneToAPI(giveMedice[i], giveMedice[i].id, giveMedice[i].qty);
+      const items = medicene.find((item) => item.id === giveMedice[i].id);
+
+      minusMediceneToAPI(giveMedice[i], items.data.stock);
     }
   };
 
@@ -124,8 +126,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getMedicene: () => dispatch(getMediceneFromAPI()),
-  minusMediceneToAPI: (datas, id, minus) =>
-    dispatch(minusMediceneToAPI(datas, id, minus)),
+  minusMediceneToAPI: (datas, stock) =>
+    dispatch(minusMediceneToAPI(datas, stock)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PatientDocterList);

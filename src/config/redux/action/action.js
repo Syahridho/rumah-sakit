@@ -346,15 +346,15 @@ export const giveMediceneToAPI = (datas, medicene, id) => (dispatch) => {
   });
 };
 
-export const minusMediceneToAPI = (datas, id, minus) => (dispatch) => {
+export const minusMediceneToAPI = (datas, stock) => (dispatch) => {
   const db = database;
-  const url = ref(db, "medicene/" + id);
+  const url = ref(db, "medicene/" + datas.id);
 
   return new Promise((resolve, reject) => {
     set(url, {
       id: datas.id,
       title: datas.title,
-      stock: (100 - minus).toString(),
+      stock: (stock - datas.qty).toString(),
     })
       .then(() => {
         console.log("berhasil update");
