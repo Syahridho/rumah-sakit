@@ -30,6 +30,7 @@ const VisitorList = ({ patients, onDelete }) => {
                 isDone={patient.data.isDone}
                 medicene={patient.data.medicene}
                 onDelete={() => alert(patient.id)}
+                data={patient}
               />
             );
           })}

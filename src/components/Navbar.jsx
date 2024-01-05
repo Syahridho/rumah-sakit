@@ -46,7 +46,7 @@ const Navbar = ({
     <div className="bg-white sticky top-0 z-10 flex flex-col justify-between items-center shadow md:flex-row md:px-12 xl:px-32 ">
       <div className="py-2 px-7 w-full flex justify-between items-center shadow md:shadow-none md:py-6 md:w-auto">
         <h1 className="font-extrabold text-blue-900 text-xl shadow-inherit">
-          Rumah Sakit
+          Klinik Sas
         </h1>
         <button className="p-2 md:hidden" onClick={() => setNavOn(!navOn)}>
           {navOn ? (

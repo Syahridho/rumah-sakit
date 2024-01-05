@@ -1,5 +1,7 @@
-const VisitorCard = ({ id, name, date, onDelete, isDone, medicene }) => {
-  if (isDone === true) {
+import PdfGenerate from "./PdfGenerate";
+
+const VisitorCard = ({ id, name, date, onDelete, isDone, medicene, data }) => {
+  if (isDone) {
     return (
       <div
         id={id}
@@ -7,7 +9,19 @@ const VisitorCard = ({ id, name, date, onDelete, isDone, medicene }) => {
       >
         <h1>Semoga Cepat sehat</h1>
         <h2>{name}</h2>
-        <p>Obat Anda : {medicene}</p>
+        <p>
+          Obat Anda :{" "}
+          {Array.isArray(medicene) && medicene.length > 0 ? (
+            <>
+              {medicene.map((medic) => (
+                <li className="list-disc" key={medic.id}>
+                  {medic.title}
+                </li>
+              ))}
+            </>
+          ) : null}
+        </p>
+        <PdfGenerate data={data} />
         <p className="text-sm">Terima Kasih telah berobat disini</p>
       </div>
     );

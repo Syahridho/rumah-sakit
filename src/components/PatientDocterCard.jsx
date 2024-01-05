@@ -1,3 +1,5 @@
+import PdfGenerate from "./PdfGenerate";
+
 const PatientDocterCard = ({
   id,
   name,
@@ -9,6 +11,7 @@ const PatientDocterCard = ({
   isDone,
   medicene,
   onGive,
+  data,
 }) => {
   return (
     <div
@@ -32,7 +35,6 @@ const PatientDocterCard = ({
           <td>No Hp</td>
           <td>: {phone}</td>
         </tr>
-
         <tr>
           <td>Dokter</td>
           <td>
@@ -71,12 +73,17 @@ const PatientDocterCard = ({
               :{" "}
               {Array.isArray(medicene) && medicene.length > 0 ? (
                 medicene.map((medic) => (
-                  <span key={medic.id}>{medic.title} </span>
+                  <span key={medic.id}>{medic.title}, </span>
                 ))
               ) : (
                 <span>No medication available</span>
               )}
             </td>
+          </tr>
+        ) : null}
+        {isDone ? (
+          <tr>
+            <PdfGenerate data={data} />
           </tr>
         ) : null}
       </table>

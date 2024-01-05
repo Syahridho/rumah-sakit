@@ -88,6 +88,7 @@ const PatientDocterList = ({
                 complaint={patient.data.complaints}
                 isDone={patient.data.isDone}
                 medicene={patient.data.medicene}
+                data={patient}
                 onGive={() =>
                   alert(
                     patient.id,

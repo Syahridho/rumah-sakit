@@ -48,6 +48,7 @@ const Home = ({
   const onSubmit = () => {
     setAlertLogin(false);
     if (isLogin) {
+      alert("Janji Berhasil dibuat !!");
       const data = {
         id: +new Date(),
         name: patient.name,
