@@ -18,7 +18,7 @@ const PatientDocterCard = ({
       id={id}
       className="flex flex-col p-4 border border-slate-300 rounded shadow col-span-8 md:col-span-4 lg:col-span-2 xl:col-span-2"
     >
-      <table className="w-full">
+      <table className="w-full h-full mb-12">
         <tr>
           <td>Nama</td>
           <td>: {name}</td>
@@ -82,22 +82,22 @@ const PatientDocterCard = ({
           </tr>
         ) : null}
         {isDone ? (
-          <tr>
+          <tr className="relative">
             <PdfGenerate data={data} />
           </tr>
         ) : null}
       </table>
-      <div className="flex gap-2 mt-2">
+      <div className="flex gap-2 mt-2 relative">
         {isDone ? (
           <button
-            className="text-center bg-orange-600 w-full text-white rounded py-2  shadow border border-orange-600"
+            className="text-center bg-orange-600 w-full text-white rounded py-2  shadow border border-orange-600 absolute bottom-0"
             onClick={onGive}
           >
             Ganti Obat
           </button>
         ) : (
           <button
-            className="text-center bg-green-600 w-full text-white rounded py-2  shadow border border-green-600"
+            className="text-center bg-green-600 w-full text-white rounded py-2  shadow border border-green-600 absolute bottom-0"
             onClick={onGive}
           >
             Beri Obat

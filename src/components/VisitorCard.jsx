@@ -5,7 +5,7 @@ const VisitorCard = ({ id, name, date, onDelete, isDone, medicene, data }) => {
     return (
       <div
         id={id}
-        className="bg-blue-300 px-4 py-4 rounded border border-blue-800"
+        className="bg-blue-300 px-4 py-4 rounded border border-blue-800 relative"
       >
         <h1>Semoga Cepat sehat</h1>
         <h2>{name}</h2>
@@ -21,8 +21,8 @@ const VisitorCard = ({ id, name, date, onDelete, isDone, medicene, data }) => {
             </>
           ) : null}
         </p>
-        <PdfGenerate data={data} />
         <p className="text-sm">Terima Kasih telah berobat disini</p>
+        <PdfGenerate data={data} icons="true" />
       </div>
     );
   }

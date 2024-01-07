@@ -1,7 +1,7 @@
 import { FaRegFilePdf } from "react-icons/fa6";
 import jsPDF from "jspdf";
 
-const PdfGenerate = ({ data }) => {
+const PdfGenerate = ({ data, icons }) => {
   const pdfGenerate = (data) => {
     console.log("Pdf", data);
     var doc = new jsPDF("portrait", "px", [320, 400], "false");
@@ -111,9 +111,15 @@ const PdfGenerate = ({ data }) => {
     };
     return date.toLocaleTimeString("id-ID", options);
   };
+
   return (
-    <button onClick={() => pdfGenerate(data)}>
-      <FaRegFilePdf />
+    <button
+      onClick={() => pdfGenerate(data)}
+      className={`hover:bg-white transition duration-500  text-red-700 rounded-full ${
+        icons ? "absolute bottom-4 right-4 p-4 text-blue-400" : ""
+      }`}
+    >
+      {icons ? <FaRegFilePdf /> : "Print PDF"}
     </button>
   );
 };
