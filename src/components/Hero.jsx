@@ -13,7 +13,7 @@ const Hero = () => {
         </div>
         <div className="col-span-2 md:col-start-2">
           <h1 className="font-bold text-2xl text-sky-800 md:text-4xl">
-            Rumah Sakit
+            Klinik
           </h1>
           <p className="text-sky-700 mb-3 mt-1">
             Mempermudah anda dalam membuat janji dengan dokter

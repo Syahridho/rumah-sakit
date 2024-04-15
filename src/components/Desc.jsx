@@ -5,8 +5,8 @@ const Desc = ({ isAdmin, isDoctor }) => {
         Halo, {isAdmin ? "Admin" : isDoctor ? "Dokter" : "Pengunjung"}
       </h1>
       <p className="mx-8 text-left md:text-center">
-        Selamat datang di Rumah Sakit, tempat di mana kesehatan dan pelayanan
-        unggul bertemu.
+        Selamat datang di Klinik, tempat di mana kesehatan dan pelayanan unggul
+        bertemu.
       </p>
     </div>
   );

@@ -64,6 +64,7 @@ const PatientCard = ({
           <td>: {isDone ? "Sudah" : "Belum"}</td>
         </tr>
       </table>
+
       <div className="flex gap-2">
         <button
           className="text-center bg-red-600 w-1/2 text-white rounded py-2  shadow border border-red-600"
