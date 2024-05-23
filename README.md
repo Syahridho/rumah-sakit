@@ -6,12 +6,12 @@ terdiri dari 3 role yaitu: Pasien, Dokter dan admin
 
 link: https://klinik-sand.vercel.app/
 
-Admin:
-Email : admin@gmail.com
+Admin: <br/>
+Email : admin@gmail.com <br/>
 Password : admin123
 
-Dokter:
-Email : lina@gmail.com
+Dokter: <br/>
+Email : lina@gmail.com <br/>
 Password : asdasdasd
 
 
