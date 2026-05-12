@@ -1,63 +1,73 @@
+import { Pill, Plus, Save, X, Package, Search } from "lucide-react";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+
 const MediceneInput = ({
-  title,
-  stock,
-  titleChange,
-  stockChange,
-  addMedicene,
-  updateMedicene,
-  isUpdate,
-  cancelUpdate,
+  title, stock, titleChange, stockChange,
+  addMedicene, updateMedicene, isUpdate, cancelUpdate,
 }) => {
   return (
-    <div
-      id="contact"
-      className="mx-8 flex flex-col md:flex-row md:justify-center md:items-center md:gap-4"
-    >
-      <div className="flex flex-col md:items-center gap-2  md:flex-row">
-        <label htmlFor="title">Nama Obat</label>
-        <input
-          type="text"
-          name="title"
-          className="border mb-2 px-2 py-1 rounded-sm md:mb-0"
-          value={title}
-          onChange={titleChange}
-          placeholder="Obat"
-        />
-      </div>
-      <div className="flex flex-col md:items-center gap-2 md:flex-row">
-        <label htmlFor="stock">Stock Obat</label>
-        <input
-          type="text"
-          name="stock"
-          className="border px-2 py-1 mb-2  md:mb-0"
-          value={stock}
-          onChange={stockChange}
-          placeholder="Stock"
-        />
-      </div>
-      {isUpdate ? (
-        <div className="flex flex-row gap-4">
-          <button
-            className="text-center bg-slate-800 w-full text-white rounded py-2 shadow border border-slate-800 mt-2 md:mt-0  md:w-auto md:px-4"
-            onClick={() => updateMedicene()}
-          >
-            Update Obat
-          </button>
-          <button
-            className="text-slate-800 bg-white w-full text-center rounded py-2 shadow border border-slate-800 mt-2 md:mt-0  md:w-auto md:px-4"
-            onClick={() => cancelUpdate()}
-          >
-            Batalkan
-          </button>
-        </div>
-      ) : (
-        <button
-          className="text-center bg-slate-800 w-full text-white rounded py-2 shadow border border-slate-800 mt-2 md:mt-0  md:w-auto md:px-4"
-          onClick={() => addMedicene()}
-        >
-          Tambah Obat
-        </button>
-      )}
+    <div className="flex justify-center px-4 mb-8">
+      <Card className="w-full max-w-lg border-0 shadow-lg">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
+              <Pill className="w-4 h-4 text-white" />
+            </div>
+            {isUpdate ? "Edit Data Obat" : "Tambah Obat Baru"}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label htmlFor="med-title">Nama Obat</Label>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  id="med-title"
+                  type="text"
+                  placeholder="Nama obat..."
+                  className="pl-10"
+                  value={title}
+                  onChange={titleChange}
+                />
+              </div>
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="med-stock">Stok Obat</Label>
+              <div className="relative">
+                <Package className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  id="med-stock"
+                  type="number"
+                  placeholder="Jumlah stok..."
+                  className="pl-10"
+                  value={stock}
+                  onChange={stockChange}
+                  min="0"
+                />
+              </div>
+            </div>
+          </div>
+
+          {isUpdate ? (
+            <div className="flex gap-3">
+              <Button className="flex-1 gap-2" onClick={updateMedicene}>
+                <Save className="w-4 h-4" />Simpan Perubahan
+              </Button>
+              <Button variant="outline" className="flex-1 gap-2" onClick={cancelUpdate}>
+                <X className="w-4 h-4" />Batalkan
+              </Button>
+            </div>
+          ) : (
+            <Button className="w-full gap-2" onClick={addMedicene}>
+              <Plus className="w-4 h-4" />Tambah Obat
+            </Button>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 };

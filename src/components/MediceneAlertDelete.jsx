@@ -1,29 +1,42 @@
+import { AlertTriangle, Trash2, X } from "lucide-react";
+import { Button } from "./ui/button";
+
 const MediceneAlertDelete = ({ action, cancel }) => {
   return (
-    <div className="flex justify-center items-center ">
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* Backdrop */}
       <div
-        className="fixed top-0 left-0 backdrop-blur-sm  w-full h-full"
+        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
         onClick={cancel}
-      ></div>
-      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
-        <div className="p-4 border w-64 h-40 bg-white rounded flex gap-4 flex-col justify-center md:w-72">
-          <h1 className="font-bold text-xl text-center">
-            Yakin ingin menghapus?
-          </h1>
-          <div className="grid grid-cols-2 gap-2 mx-2 md:gap-4">
-            <button
-              className="py-2 border border-red-500 bg-red-500 text-white rounded shadow hover:bg-red-600 hover:border-red-600 hover:shadow-md"
-              onClick={action}
-            >
-              Hapus
-            </button>
-            <button
-              className="py-2 border border-slate-500 bg-slate-800 text-white rounded shadow hover:bg-slate-800 hover:border-slate-800 hover:shadow-md"
-              onClick={cancel}
-            >
-              Batalkan
-            </button>
+      />
+      {/* Dialog */}
+      <div className="relative z-10 bg-white rounded-2xl shadow-2xl p-6 w-80 mx-4 animate-fade-in">
+        <button
+          className="absolute top-3 right-3 p-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground"
+          onClick={cancel}
+        >
+          <X className="w-4 h-4" />
+        </button>
+
+        <div className="flex flex-col items-center text-center gap-3">
+          <div className="w-14 h-14 rounded-2xl bg-red-100 flex items-center justify-center">
+            <AlertTriangle className="w-7 h-7 text-red-600" />
           </div>
+          <div>
+            <h2 className="text-lg font-bold text-foreground">Hapus Data?</h2>
+            <p className="text-sm text-muted-foreground mt-1">
+              Data yang dihapus tidak dapat dikembalikan. Apakah Anda yakin?
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 mt-5">
+          <Button variant="outline" onClick={cancel} className="gap-1.5">
+            <X className="w-4 h-4" />Batal
+          </Button>
+          <Button variant="destructive" onClick={action} className="gap-1.5">
+            <Trash2 className="w-4 h-4" />Hapus
+          </Button>
         </div>
       </div>
     </div>

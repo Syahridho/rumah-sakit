@@ -1,9 +1,98 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,200;6..12,300;6..12,400;6..12,500;6..12,600;6..12,700;6..12,800;6..12,900;6..12,1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,600;6..12,700;6..12,800&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.active {
-  @apply border-b-2 border-sky-400;
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 199 89% 33%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 94%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 40% 94%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 196 74% 90%;
+    --accent-foreground: 199 89% 25%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 32% 88%;
+    --input: 214 32% 88%;
+    --ring: 199 89% 33%;
+
+    --radius: 0.75rem;
+  }
 }
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+}
+
+@layer utilities {
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(199 89% 22%) 0%, hsl(199 89% 38%) 50%, hsl(186 80% 42%) 100%);
+  }
+  .gradient-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(240,248,255,0.95));
+  }
+  .glass {
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+  .glass-dark {
+    backdrop-filter: blur(12px);
+    background: rgba(2, 52, 80, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(199 89% 28%), hsl(186 80% 38%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* Active nav link */
+.active-link {
+  @apply text-primary font-semibold;
+  position: relative;
+}
+.active-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: hsl(199 89% 33%);
+  border-radius: 9999px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: hsl(210 40% 96%); }
+::-webkit-scrollbar-thumb { background: hsl(199 50% 65%); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(199 89% 33%); }
